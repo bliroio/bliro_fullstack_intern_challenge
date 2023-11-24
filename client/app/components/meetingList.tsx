@@ -45,7 +45,8 @@ const MeetingList = () => {
     return <MeetingDetails meeting={selectedMeeting} onEdit={handleEdit} onDelete={handleDelete} />;
   }
 
-  const filteredMeetings = meetings.filter(meeting => meeting.title.toLowerCase().includes(filter));
+  const filteredMeetings = Array.isArray(meetings) ? meetings.filter(meeting => meeting.title.toLowerCase().includes(filter)) : [];
+
   const sortedMeetings = filteredMeetings.sort((a, b) => {
     if (sort === 'title') {
       return a.title.localeCompare(b.title);
