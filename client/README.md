@@ -1,51 +1,85 @@
-# Client
-This guide outlines the setup process for the Next.js client environment.
+# Bliro Full Stack Intern Challenge - Frontend
 
-## Prerequisites
-- Node.js (version v18.18.2)
-- npm (usually comes with Node.js)
+## Project Overview
+
+This repository contains the frontend part of the Bliro Full Stack Intern Challenge. It provides a user interface for managing meetings, including features for creating, updating, and deleting meetings.
+
+## Tasks
+
+### Meeting Details View
+
+Implement a new component `meetingDetails.tsx` that:
+
+- Displays all details of a meeting when a meeting in the list is clicked.
+- Allows editing and deleting the meeting using the new API endpoints.
+
+### Create Meeting Form
+
+Develop a form to add new meetings, including title, start date, end date, description, and participants. Validate inputs on the client side.
+
+### Global State Management
+
+Set up a simple global state management (Context API or Redux) to manage and update the meetings list across components.
+
+## Additional Features
+
+Extend the application with the following additional feature:
+
+- **Filter and Sort Meetings:**
+  Implement the ability to filter and sort meetings based on various criteria such as title, date, and the number of participants.
+
+## Setup
+
+1. Clone the repository:
+
+   ```bash
+   git clone https://github.com/vinit717/bliro_fullstack_intern_challenge
+   cd client
+
+## Install Volta (if not already installed)
+
+- Follow the instructions on the <https://volta.sh/> to install Volta, a JavaScript runtime manager.
+
+- Set Node.js version using Volta
+
+   ```bash
+    volta pin node@<supported node version>
+
+- for this project Node.js (version v18.18.2)
+
+Your Next.js client will start on <http://localhost:3001> by default.
 
 ## Install Dependencies
+
 Execute the following command to install the required npm packages:
 
 ```bash
 npm install
 ```
 
-## Environment Variables
-Duplicate the .env.local.example file to a new file named .env.local, and populate it with your specific variables for the environment.
-
-```bash
-cp .env.local.example .env.local
-```
-
-Edit the .env.local file to include necessary environment variables such as API endpoints.
-
 ## Run the Development Server
+
 To run the client in development mode with hot-reloading:
 
 ```bash
 npm run dev
 ```
 
-Your Next.js client will start on http://localhost:3001 by default.
-
 ## Build and Start for Production
+
 To build the application for production usage:
 
 ```bash
 npm run build
 ```
 
-## Then start the Next.js application:
+## Testing
 
 ```bash
-npm start
+npm run test
 ```
 
-## Testing
-To check that your client setup is functioning correctly, navigate to http://localhost:3001 in your web browser. You should see your Next.js application running.
-
 ## Troubleshooting
+
 If npm packages are causing issues, delete the node_modules folder and package-lock.json file and reinstall the dependencies with npm install.
 Ensure that .env.local is included in your .gitignore to prevent committing sensitive environment data to version control.
