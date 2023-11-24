@@ -28,6 +28,7 @@ const MeetingFilter: React.FC<MeetingFilterProps> = ({ filter, sort, onFilterCha
           labelId="sort-label" 
           value={sort} 
           onChange={event => onSortChange(event.target.value)}
+          data-testid="sort-select"
         >
           <MenuItem value="title">Title</MenuItem>
           <MenuItem value="date">Date</MenuItem>
