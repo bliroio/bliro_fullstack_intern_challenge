@@ -15,7 +15,7 @@ interface MeetingFilterProps {
 
 const MeetingFilter: React.FC<MeetingFilterProps> = ({ filter, sort, onFilterChange, onSortChange }) => {
   return (
-    <Box sx={{ display: 'flex', justifyContent: 'space-between', marginBottom: '1rem', p: 1 }}>
+    <Box sx={{ display: 'flex', gap: "2rem", marginBottom: '1rem', p: 1 }}>
       <TextField 
         label="Filter by title" 
         value={filter} 
