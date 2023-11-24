@@ -49,6 +49,13 @@ Extend the application with the following additional feature:
 
 Your Next.js client will start on <http://localhost:3001> by default.
 
+## Environment Variables
+create a new file named `.env` and add this.
+
+```
+NEXT_PUBLIC_API_BASE_URL="http://localhost:3000/api/meetings"
+```
+
 ## Install Dependencies
 
 Execute the following command to install the required npm packages:
