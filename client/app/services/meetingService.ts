@@ -4,9 +4,20 @@ import { Meeting } from '../models/Meeting';
 const API_BASE_URL = 'http://localhost:3000/api/meetings';
 const MOCKED_AUTH_TOKEN = 'mocked-auth-token';
 
+const instance = axios.create({
+  baseURL: API_BASE_URL
+});
+
+instance.interceptors.request.use((config) => {
+  config.headers.Authorization = MOCKED_AUTH_TOKEN;
+  return config;
+}, (error) => {
+  return Promise.reject(error);
+});
+
 export const getMeetings = async (): Promise<Meeting[]> => {
   try {
-    const response = await axios.get<Meeting[]>(API_BASE_URL);
+    const response = await instance.get<Meeting[]>('');
     return response.data;
   } catch (error) {
     console.error('Error fetching meetings:', error);
@@ -16,11 +27,7 @@ export const getMeetings = async (): Promise<Meeting[]> => {
 
 export const createMeeting = async (meeting: Meeting): Promise<Meeting> => {
   try {
-    const response = await axios.post<Meeting>(API_BASE_URL, meeting, {
-      headers: {
-        Authorization: MOCKED_AUTH_TOKEN,
-      },
-    });
+    const response = await instance.post<Meeting>('', meeting);
     return response.data;
   } catch (error) {
     console.error('Error creating meeting:', error);
@@ -30,11 +37,7 @@ export const createMeeting = async (meeting: Meeting): Promise<Meeting> => {
 
 export const updateMeeting = async (meeting: Meeting): Promise<Meeting> => {
   try {
-    const response = await axios.put<Meeting>(`${API_BASE_URL}/${meeting._id}`, meeting, {
-      headers: {
-        Authorization: MOCKED_AUTH_TOKEN,
-      },
-    });
+    const response = await instance.put<Meeting>(`/${meeting._id}`, meeting);
     return response.data;
   } catch (error) {
     console.error('Error updating meeting:', error);
@@ -44,11 +47,7 @@ export const updateMeeting = async (meeting: Meeting): Promise<Meeting> => {
 
 export const deleteMeeting = async (id: string): Promise<void> => {
   try {
-    await axios.delete(`${API_BASE_URL}/${id}`, {
-      headers: {
-        Authorization: MOCKED_AUTH_TOKEN,
-      },
-    });
+    await instance.delete(`/${id}`);
   } catch (error) {
     console.error('Error deleting meeting:', error);
     throw error;

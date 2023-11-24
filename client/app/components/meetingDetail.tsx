@@ -28,7 +28,7 @@ const MeetingDetails: React.FC<MeetingDetailsProps> = ({ meeting, onEdit, onDele
 
   const handleDelete = async () => {
     await deleteMeeting(meeting._id);
-    onDelete(meeting.id);
+    onDelete(meeting._id);
     setMeetings(meetings.filter(m => m._id !== meeting._id));
   };
 
