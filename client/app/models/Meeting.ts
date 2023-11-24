@@ -1,4 +1,5 @@
 export interface Meeting {
+  _id: any;
   id: string;
   title: string;
   startTime: string;

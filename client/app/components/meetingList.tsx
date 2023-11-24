@@ -25,15 +25,25 @@ const MeetingList: React.FC = () => {
     getMeetings().then(setMeetings);
   }, []);
 
+  const handleEdit = (updatedMeeting: Meeting) => {
+    setMeetings(meetings.map(meeting => meeting._id === updatedMeeting._id ? updatedMeeting : meeting));
+    setSelectedMeeting(null);
+  };
+
+  const handleDelete = (id: string) => {
+    setMeetings(meetings.filter(meeting => meeting._id !== id));
+    setSelectedMeeting(null);
+  };
+
   if (selectedMeeting) {
-    return <MeetingDetails meeting={selectedMeeting} />;
+    return <MeetingDetails meeting={selectedMeeting} onEdit={handleEdit} onDelete={handleDelete} />;
   }
 
   return (
     <Paper elevation={3}>
       <List>
         {meetings.map((meeting, index) => (
-          <React.Fragment key={meeting.id}>
+          <React.Fragment key={meeting._id}>
             <Button onClick={() => setSelectedMeeting(meeting)}>
               <ListItemText
                 primary={meeting.title}
