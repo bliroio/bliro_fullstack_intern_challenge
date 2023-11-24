@@ -5,12 +5,11 @@ import MeetingForm from './components/MeetingForm';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
-import { Meeting } from './models/Meeting';
 
 const Home: React.FC = () => {
   const [isCreating, setIsCreating] = useState(false);
 
-  const handleCreate = (meeting: Meeting) => {
+  const handleCreate = () => {
     setIsCreating(false);
   };
 
@@ -22,7 +21,7 @@ const Home: React.FC = () => {
     <Container maxWidth="md">
       <Typography variant="h2" gutterBottom>
         Meetings
-        <Button onClick={() => setIsCreating(true)} style={{ float: 'right' }}>
+        <Button onClick={() => setIsCreating(true)} style={{ padding: '10px 0px 0px 20px' }}>
           Create Meeting
         </Button>
       </Typography>

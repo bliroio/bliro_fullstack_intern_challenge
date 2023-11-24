@@ -1,34 +1,40 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Meeting } from '../models/Meeting';
 import Paper from '@mui/material/Paper';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import { createMeeting } from '../services/meetingService';
+import { createMeeting, updateMeeting } from '../services/meetingService';
 import styled from '@emotion/styled';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 
 interface MeetingFormProps {
-  onCreate: (meeting: Meeting) => void;
-}
-
+    initialMeeting?: Meeting;
+    onSubmit?: (meeting: Meeting) => void;
+    onCreate?: (meeting: Meeting) => void; 
+  }
+  
 const StyledPaper = styled(Paper)`
   padding: 16px;
   margin-bottom: 16px;
 `;
 
-const MeetingForm: React.FC<MeetingFormProps> = ({ onCreate }) => {
-  const [newMeeting, setNewMeeting] = useState<Partial<Meeting>>({});
+const MeetingForm: React.FC<MeetingFormProps> = ({ initialMeeting, onSubmit }) => {
+  const [formMeeting, setFormMeeting] = useState<Partial<Meeting>>(initialMeeting || {});
+
+  useEffect(() => {
+    setFormMeeting(initialMeeting || {});
+  }, [initialMeeting]);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.name === 'participants') {
-      setNewMeeting({
-        ...newMeeting,
+      setFormMeeting({
+        ...formMeeting,
         [event.target.name]: event.target.value.split(','),
       });
     } else {
-      setNewMeeting({
-        ...newMeeting,
+      setFormMeeting({
+        ...formMeeting,
         [event.target.name]: event.target.value,
       });
     }
@@ -36,36 +42,44 @@ const MeetingForm: React.FC<MeetingFormProps> = ({ onCreate }) => {
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-    if (newMeeting.title && newMeeting.startTime && newMeeting.endTime) {
-      const createdMeeting = await createMeeting(newMeeting as Meeting);
-      onCreate(createdMeeting);
+    if (formMeeting.title && formMeeting.startTime && formMeeting.endTime) {
+      let savedMeeting;
+      if (formMeeting._id) {
+        savedMeeting = await updateMeeting(formMeeting as Meeting);
+      } else {
+        savedMeeting = await createMeeting(formMeeting as Meeting);
+      }
+      if (onSubmit) {
+        onSubmit(savedMeeting);
+      }
     } else {
       alert('Please fill in all fields.');
     }
   };
+  
 
   return (
     <StyledPaper elevation={3}>
       <form onSubmit={handleSubmit}>
         <Box sx={{ flexGrow: 1 }}>
-          <Grid container spacing={2} direction="column">
+          <Grid container spacing={2}>
             <Grid item xs={12}>
-              <TextField fullWidth label="Title" name="title" onChange={handleChange} required />
+              <TextField fullWidth label="Title" name="title" value={formMeeting.title || ''} onChange={handleChange} required />
+            </Grid>
+            <Grid item xs={6}>
+              <TextField fullWidth label="Start Time" name="startTime" type="datetime-local" value={formMeeting.startTime || ''} onChange={handleChange} required />
+            </Grid>
+            <Grid item xs={6}>
+              <TextField fullWidth label="End Time" name="endTime" type="datetime-local" value={formMeeting.endTime || ''} onChange={handleChange} required />
             </Grid>
             <Grid item xs={12}>
-              <TextField fullWidth label="Start Time" name="startTime" type="datetime-local" onChange={handleChange} required />
+              <TextField fullWidth label="Description" name="description" value={formMeeting.description || ''} onChange={handleChange} />
             </Grid>
             <Grid item xs={12}>
-              <TextField fullWidth label="End Time" name="endTime" type="datetime-local" onChange={handleChange} required />
+              <TextField fullWidth label="Participants" name="participants" value={(formMeeting.participants || []).join(',')} placeholder="Enter emails separated by commas" onChange={handleChange} />
             </Grid>
             <Grid item xs={12}>
-              <TextField fullWidth label="Description" name="description" onChange={handleChange} />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField fullWidth label="Participants" name="participants" placeholder="Enter emails separated by commas" onChange={handleChange} />
-            </Grid>
-            <Grid item xs={12}>
-              <Button type="submit" variant="contained">Create Meeting</Button>
+              <Button type="submit" variant="contained">{formMeeting._id ? 'Update' : 'Create'} Meeting</Button>
             </Grid>
           </Grid>
         </Box>
