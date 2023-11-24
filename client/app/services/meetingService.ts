@@ -1,19 +1,22 @@
 import axios from 'axios';
 import { Meeting } from '../models/Meeting';
 
-const API_BASE_URL = 'http://localhost:3000/api/meetings';
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 const MOCKED_AUTH_TOKEN = 'mocked-auth-token';
 
 const instance = axios.create({
-  baseURL: API_BASE_URL
+  baseURL: API_BASE_URL,
 });
 
-instance.interceptors.request.use((config) => {
-  config.headers.Authorization = MOCKED_AUTH_TOKEN;
-  return config;
-}, (error) => {
-  return Promise.reject(error);
-});
+instance.interceptors.request.use(
+  (config) => {
+    config.headers.Authorization = MOCKED_AUTH_TOKEN;
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
 
 export const getMeetings = async (): Promise<Meeting[]> => {
   try {
