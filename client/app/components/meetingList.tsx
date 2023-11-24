@@ -1,13 +1,12 @@
-'use client'
-
 import React, { useEffect, useState } from 'react';
 import { getMeetings } from '../services/meetingService';
 import { Meeting } from '../models/Meeting';
 import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
+import Button from '@mui/material/Button';
 import ListItemText from '@mui/material/ListItemText';
 import Paper from '@mui/material/Paper';
 import Divider from '@mui/material/Divider';
+import MeetingDetails from './meetingDetail';
 
 const formatDate = (dateString: string) => {
   const date = new Date(dateString);
@@ -20,17 +19,22 @@ const formatDate = (dateString: string) => {
 
 const MeetingList: React.FC = () => {
   const [meetings, setMeetings] = useState<Meeting[]>([]);
+  const [selectedMeeting, setSelectedMeeting] = useState<Meeting | null>(null);
 
   useEffect(() => {
     getMeetings().then(setMeetings);
   }, []);
+
+  if (selectedMeeting) {
+    return <MeetingDetails meeting={selectedMeeting} />;
+  }
 
   return (
     <Paper elevation={3}>
       <List>
         {meetings.map((meeting, index) => (
           <React.Fragment key={meeting.id}>
-            <ListItem alignItems="flex-start">
+            <Button onClick={() => setSelectedMeeting(meeting)}>
               <ListItemText
                 primary={meeting.title}
                 secondary={
@@ -40,7 +44,7 @@ const MeetingList: React.FC = () => {
                   </>
                 }
               />
-            </ListItem>
+            </Button>
             {index < meetings.length - 1 && <Divider variant="inset" component="li" />}
           </React.Fragment>
         ))}

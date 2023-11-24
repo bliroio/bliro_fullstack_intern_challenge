@@ -3,4 +3,6 @@ export interface Meeting {
   title: string;
   startTime: string;
   endTime: string;
+  description: string;
+  participants: string[];
 }
