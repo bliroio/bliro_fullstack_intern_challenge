@@ -7,6 +7,7 @@ import ListItemText from '@mui/material/ListItemText';
 import Paper from '@mui/material/Paper';
 import Divider from '@mui/material/Divider';
 import MeetingDetails from './meetingDetail';
+import { MeetingContext } from '../contexts/MeetingContext';
 
 const formatDate = (dateString: string) => {
   const date = new Date(dateString);
@@ -18,7 +19,7 @@ const formatDate = (dateString: string) => {
 };
 
 const MeetingList: React.FC = () => {
-  const [meetings, setMeetings] = useState<Meeting[]>([]);
+  const { meetings, setMeetings } = React.useContext(MeetingContext);
   const [selectedMeeting, setSelectedMeeting] = useState<Meeting | null>(null);
 
   useEffect(() => {

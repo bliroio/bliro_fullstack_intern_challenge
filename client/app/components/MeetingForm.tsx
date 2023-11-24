@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Meeting } from '../models/Meeting';
 import Paper from '@mui/material/Paper';
 import TextField from '@mui/material/TextField';
@@ -7,13 +7,14 @@ import { createMeeting, updateMeeting } from '../services/meetingService';
 import styled from '@emotion/styled';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
+import { MeetingContext } from '../contexts/MeetingContext';
 
 interface MeetingFormProps {
     initialMeeting?: Meeting;
     onSubmit?: (meeting: Meeting) => void;
     onCreate?: (meeting: Meeting) => void; 
-  }
-  
+}
+
 const StyledPaper = styled(Paper)`
   padding: 16px;
   margin-bottom: 16px;
@@ -21,6 +22,7 @@ const StyledPaper = styled(Paper)`
 
 const MeetingForm: React.FC<MeetingFormProps> = ({ initialMeeting, onSubmit }) => {
   const [formMeeting, setFormMeeting] = useState<Partial<Meeting>>(initialMeeting || {});
+  const { meetings, setMeetings } = useContext(MeetingContext);
 
   useEffect(() => {
     setFormMeeting(initialMeeting || {});
@@ -52,6 +54,7 @@ const MeetingForm: React.FC<MeetingFormProps> = ({ initialMeeting, onSubmit }) =
       if (onSubmit) {
         onSubmit(savedMeeting);
       }
+      setMeetings([...meetings, savedMeeting]);
     } else {
       alert('Please fill in all fields.');
     }
