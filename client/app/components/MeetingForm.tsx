@@ -67,13 +67,13 @@ const MeetingForm: React.FC<MeetingFormProps> = ({ initialMeeting, onSubmit }) =
         <Box sx={{ flexGrow: 1 }}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
-              <TextField fullWidth label="Title" name="title" value={formMeeting.title || ''} onChange={handleChange} required />
+              <TextField fullWidth label="Title" name="title" value={formMeeting.title || ''} onChange={handleChange} required inputProps={{ 'data-testid': 'title-input' }} />
             </Grid>
             <Grid item xs={6}>
-              <TextField fullWidth label="Start Time" name="startTime" type="datetime-local" value={formMeeting.startTime || ''} onChange={handleChange} required />
+              <TextField fullWidth label="Start Time" name="startTime" type="datetime-local" value={formMeeting.startTime || ''} onChange={handleChange} required inputProps={{ 'data-testid': 'start-time-input' }} />
             </Grid>
             <Grid item xs={6}>
-              <TextField fullWidth label="End Time" name="endTime" type="datetime-local" value={formMeeting.endTime || ''} onChange={handleChange} required />
+              <TextField fullWidth label="End Time" name="endTime" type="datetime-local" value={formMeeting.endTime || ''} onChange={handleChange} required inputProps={{ 'data-testid': 'end-time-input' }} />
             </Grid>
             <Grid item xs={12}>
               <TextField fullWidth label="Description" name="description" value={formMeeting.description || ''} onChange={handleChange} />
@@ -82,7 +82,7 @@ const MeetingForm: React.FC<MeetingFormProps> = ({ initialMeeting, onSubmit }) =
               <TextField fullWidth label="Participants" name="participants" value={(formMeeting.participants || []).join(',')} placeholder="Enter emails separated by commas" onChange={handleChange} />
             </Grid>
             <Grid item xs={12}>
-              <Button type="submit" variant="contained">{formMeeting._id ? 'Update' : 'Create'} Meeting</Button>
+              <Button type="submit" variant="contained" data-testid="submit-button">{formMeeting._id ? 'Update' : 'Create'} Meeting</Button>
             </Grid>
           </Grid>
         </Box>
