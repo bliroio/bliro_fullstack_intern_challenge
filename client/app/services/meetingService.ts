@@ -14,6 +14,20 @@ export const getMeetings = async (): Promise<Meeting[]> => {
   }
 };
 
+export const createMeeting = async (meeting: Meeting): Promise<Meeting> => {
+  try {
+    const response = await axios.post<Meeting>(API_BASE_URL, meeting, {
+      headers: {
+        Authorization: MOCKED_AUTH_TOKEN,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error creating meeting:', error);
+    throw error;
+  }
+};
+
 export const updateMeeting = async (meeting: Meeting): Promise<Meeting> => {
   try {
     const response = await axios.put<Meeting>(`${API_BASE_URL}/${meeting._id}`, meeting, {
