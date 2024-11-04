@@ -1,4 +1,4 @@
-# Bliro Full Stack Intern Take-Home Challenge
+# Bliro's Senior Full Stack Engineer Challenge
 
 ## Objective:
 Enhance the existing meeting application by adding new features and improving the codebase.
@@ -12,39 +12,34 @@ Enhance the existing meeting application by adding new features and improving th
 
 ## Tasks:
 
-### Backend (1.5 hours)
-**Database Schema Extension:** Extend the Meeting model to include a description field and a participants field, which should be an array of strings representing participant emails.
+### Pagination
 
-- Modify the corresponding TypeScript interface in Meeting.ts.
-- Update the meetingService.ts to handle the new fields.
+Ooooops, the meeting list in the client application is loading quite a bit. Looks like our user has quite a lot of conversation. Let's improve the user experience by integrating pagination to the system. 
 
-**API Endpoint Creation:** Create new endpoints in meetingRoutes.ts and the corresponding controller logic in meetingController.ts to:
+Your CTO spends quite some time on instagram and really loves the endless scroll feature there. He asks you whether we could have the same for the meeting list. 
 
-- Add a new meeting.
-- Update an existing meeting.
-- Delete a meeting.
+### Search
 
-**Validation Middleware:** Implement middleware to validate meeting data for create and update operations (check for valid dates, non-empty title, and valid email format for participants).
+Great, application loading times improved dramatically by implementing pagination. We released the feature to the code base - being sure that users will love it - but instead there are lots of complaints coming in. 
 
-### Frontend (1.5 hours)
-**Meeting Details View:** Implement a new component meetingDetails.tsx that:
+> Dear Team
+> It's cool to see that the app is loading quicker now. 
+> But how do I find any meeting now? 
+> Before I used CMD+F and typed the meeting title. 
+> Now this is not possible anymore because I have to scroll
+> through all my 10.000 meetings first before I can use 
+> the CMD+F search for all meetings. 
+> Please revert that change again!!!
 
-- Displays all details of a meeting when a meeting in the list is clicked.
-- Allows editing and deleting the meeting using the new API endpoints.
+The CTO is desperate. He fears that he looses his endless scroll feature which he loves so much. Then you have an idea - a search functionality can serve the users needs and still keeps the endless scroll feature. You pitch the idea to the CTO and he buys it. He puts all his hopes into your skills creating a search functionality into the backend. 
 
-**Create Meeting Form:** Develop a form to add new meetings, including title, start date, end date, description, and participants. Validate inputs on the client side.
+### Design
 
-**Global State Management:** Set up a simple global state management (Context API or Redux) to manage and update the meetings list across components.
+Meeting List yet looks a bit raw. While you were integrating the search capabilities, the CTO pulled out his figma skills and redesigned the meeting list. 
 
-### Testing (1 hour)
-- Write integration tests for the new backend endpoints.
-- Write unit tests for the new frontend components.
+(Figma Link)[https://www.figma.com/design/eh9Btn0jfpNjVw1qQxxeXJ/Bliro-Senior-Full-Stack-Engineer-Challenge?node-id=0-1&m=dev&t=GZ8ybK8y6rS8s7wU-1]
 
-### Bonus (Optional):
-
-- Implement authentication middleware on the backend that checks for a mock auth token before allowing any meeting modifications.
-- Add filtering and sorting capabilities to the meetings list based on title, date, and number of participants.
-
+Please create customized Material UI compoents. Create and structure them in a way that they are reusable. Please create a theme and define fonts as well as colors there so that your designs can easily be reused by your team mates. 
 
 ## Deliverables:
 
