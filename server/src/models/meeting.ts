@@ -4,14 +4,12 @@ export interface IMeeting extends Document {
   title: string;
   startTime: Date;
   endTime: Date;
-  // Add other properties as needed
 }
 
 const meetingSchema = new mongoose.Schema({
   title: { type: String, required: true },
   startTime: { type: Date, required: true },
   endTime: { type: Date, required: true },
-  // Define other fields as needed
 });
 
 const Meeting = mongoose.model<IMeeting>('Meeting', meetingSchema);
