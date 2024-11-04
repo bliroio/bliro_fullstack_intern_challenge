@@ -1,7 +1,7 @@
-'use client'
+'use client';
 
 import React, { useEffect, useState } from 'react';
-import { getMeetings } from '../services/meetingService';
+import { listMeetings } from '../services/meetingService';
 import { Meeting } from '../models/Meeting';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
@@ -22,7 +22,7 @@ const MeetingList: React.FC = () => {
   const [meetings, setMeetings] = useState<Meeting[]>([]);
 
   useEffect(() => {
-    getMeetings().then(setMeetings);
+    listMeetings().then(setMeetings);
   }, []);
 
   return (
@@ -41,7 +41,9 @@ const MeetingList: React.FC = () => {
                 }
               />
             </ListItem>
-            {index < meetings.length - 1 && <Divider variant="inset" component="li" />}
+            {index < meetings.length - 1 && (
+              <Divider variant="inset" component="li" />
+            )}
           </React.Fragment>
         ))}
       </List>
